@@ -6,7 +6,7 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "apikit"
+name = "aikit"
 version = "0.1.0"
 description = "A collection of AI chat and image tools."
 readme = "README.md"
