@@ -31,8 +31,12 @@ def get_client(model: str) -> InferenceClient:
     return client
 
 
-def get_models():
+def get_chat_models():
     return [
         "meta-llama/Meta-Llama-3-8B-Instruct",
         "mistralai/Mixtral-8x7B-Instruct-v0.1",
     ]
+
+
+def get_image_models():
+    return ["black-forest-labs/FLUX.1-schnell", "stabilityai/stable-diffusion-2-1"]
