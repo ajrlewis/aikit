@@ -7,11 +7,11 @@ extract = "Extract (or infer) these data points: `{data_points}` from the follow
 summarize = "Summarize the following text: `{text}`. Return only the summary of the text in your response."
 sentiment = "Determine the sentiment from the following text: `{text}`. Return only 'positive', 'negative' or 'neutral' depending on the sentiment. Do not include any other text."
 code = "Generate code in the following language `{language}` to do the following: `{description}`. Return only the code in your response. Do not include any other text."
+keywords = "Analyze this text: `{text}. Return only the comma-separated keywords for the text. Do not include any other text in your response."
 
 slogan = "Generate a slogan for company called `{name} ({description})`. Return only the slogan in your response."
 paragraph = "Generate a website paragraph for company called `{name} ({description})`. Return only the paragraph in your response."
 condense = "Analyze this text: `{text}`. Condense the text into a maximum of {number_of_words} words. Return only the condensed text in your response."
-keywords = ""
 language = ""
 translate = ""
 rewrite = ""
