@@ -34,6 +34,7 @@ def get_client(model: str) -> InferenceClient:
 def get_chat_models():
     return [
         "meta-llama/Meta-Llama-3-8B-Instruct",
+        # "meta-llama/Llama-3.1-70B-Instruct",  # requires pro subscription
         "mistralai/Mixtral-8x7B-Instruct-v0.1",
     ]
 

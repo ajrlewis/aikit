@@ -1,4 +1,5 @@
 from loguru import logger
+from typing import Optional
 
 from . import messages
 from . import prompt_templates
@@ -43,12 +44,45 @@ def completion(
     return message
 
 
-def call(client, template_name: str, **kwargs):
-    content = prompt_templates.render_template(template_name, **kwargs)
+def call(
+    client,
+    template_name: str,
+    system_content: str = "Your a helpful AI assistant.",
+    **kwargs,
+):
+    # Render user content template
+
+    try:
+        content = prompt_templates.render_template(template_name, **kwargs)
+    except ValueError as error:
+        content = f"unable to complete call, error raised: {error}"
+        logger.error(f"{content = }")
+        assistant_message = messages.create_assistant_message(content)
+        logger.debug(f"{assistant_message = }")
+        return assistant_message
+
     user_message = messages.create_user_message(content=content)
-    context_messages = [user_message]
-    assistant_message = completion(
-        client, context_messages=context_messages, model=kwargs.get("model")
-    )
+
+    # Create system context message
+    system_message = messages.create_system_message(content=system_content)
+
+    context_messages = []
+    context_messages.append(system_message)
+    context_messages.append(user_message)
+
+    try:
+        assistant_message = completion(
+            client, context_messages=context_messages, model=kwargs.get("model")
+        )
+        logger.debug(f"{assistant_message = }")
+    except Exception as e:
+        content = f" unable to get completion, error raised: {e}"
+        logger.error(f"{content = }")
+        assistant_message = messages.create_assistant_message(content)
+
     logger.debug(f"{assistant_message = }")
     return assistant_message
+
+
+if __name__ == "__main__":
+    main()

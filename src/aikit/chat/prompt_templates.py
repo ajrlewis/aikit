@@ -12,7 +12,7 @@ keywords = "Analyze this text: `{text}. Return only the comma-separated keywords
 slogan = "Generate a slogan for company called `{name} ({description})`. Return only the slogan in your response."
 paragraph = "Generate a website paragraph for company called `{name} ({description})`. Return only the paragraph in your response."
 condense = "Analyze this text: `{text}`. Condense the text into a maximum of {number_of_words} words. Return only the condensed text in your response."
-language = ""
+language = "What language is this text in: {text}. Return only the language. Do not format your response."
 translate = ""
 rewrite = ""
 
@@ -34,6 +34,10 @@ PROMPT_NAME_TO_TEMPALTE = {
 
 def _get(template_name: str) -> Optional[str]:
     template = PROMPT_NAME_TO_TEMPALTE.get(template_name)
+    if not template:
+        message = f"{template_name = } is not supported."
+        logger.error(message)
+        raise ValueError(message)
     logger.debug(f"{template_name = } {template = }")
     return template
 
