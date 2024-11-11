@@ -8,6 +8,8 @@ summarize = "Summarize the following text: `{text}`. Return only the summary of 
 sentiment = "Determine the sentiment from the following text: `{text}`. Return only 'positive', 'negative' or 'neutral' depending on the sentiment. Do not include any other text."
 code = "Generate code in the following language `{language}` to do the following: `{description}`. Return only the code in your response. Do not include any other text."
 keywords = "Analyze this text: `{text}. Return only the comma-separated keywords for the text. Do not include any other text in your response."
+humanize = "Analyze the following text: `{text}`. Transform it into a human-like version, incorporating vocabulary variation, sentence structure adjustments, and natural language patterns to make it indistinguishable from human-written content. Return only the formatted text in your response. Do not format your response."
+
 
 slogan = "Generate a slogan for company called `{name} ({description})`. Return only the slogan in your response."
 paragraph = "Generate a website paragraph for company called `{name} ({description})`. Return only the paragraph in your response."
@@ -26,6 +28,7 @@ PROMPT_NAME_TO_TEMPALTE = {
     "condense": condense,
     "keywords": keywords,
     "ask": ask,
+    "humanize": humanize,
     "language": language,
     "translate": translate,
     "rewrite": rewrite,
