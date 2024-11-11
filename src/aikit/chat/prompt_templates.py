@@ -2,36 +2,30 @@ from typing import Optional
 
 from loguru import logger
 
+REMOVE_FORMATTING = "Your response will be sent directly to my client, so do not include comments directed toward me."
+
 ask = "{question}"
-extract = "Extract (or infer) these data points: `{data_points}` from the following text: `{text}`. If you're not able to extract a data point, return '' for it's value. Finally, return only the extracted data points as a JSON object in your response. Do not format your response in any other way."
-summarize = "Summarize the following text: `{text}`. Return only the summary of the text in your response."
-sentiment = "Determine the sentiment from the following text: `{text}`. Return only 'positive', 'negative' or 'neutral' depending on the sentiment. Do not include any other text."
-code = "Generate code in the following language `{language}` to do the following: `{description}`. Return only the code in your response. Do not include any other text."
-keywords = "Analyze this text: `{text}. Return only the comma-separated keywords for the text. Do not include any other text in your response."
-humanize = "Analyze the following text: `{text}`. Transform it into a human-like version, incorporating vocabulary variation, sentence structure adjustments, and natural language patterns to make it indistinguishable from human-written content. Return only the formatted text in your response. Do not format your response."
+extract = "Extract (or infer) these data points: `{data_points}` from the following text: `{text}`. If you're not able to extract a data point, return '' for it's value. Return only the extracted data points as a JSON object in your response."
+summarize = "Summarize the following text: `{text}`."
+sentiment = "Determine the sentiment from the following text: `{text}`. Return only 'positive', 'neutral' or 'negative'."
+code = "Generate code in the following language `{language}` to do the following: `{description}`. Return only the code in your response."
+keywords = "Extract only the most relevant keywords and key phrases from this text: `{text}`. Return only the comma-separated extraction."
+humanize = "Humanize the following text: `{text}`. Incorporate human-like nuances, expressions, and a natural flow, delivering content that feels genuinely human-authored."
 
-
-slogan = "Generate a slogan for company called `{name} ({description})`. Return only the slogan in your response."
-paragraph = "Generate a website paragraph for company called `{name} ({description})`. Return only the paragraph in your response."
-condense = "Analyze this text: `{text}`. Condense the text into a maximum of {number_of_words} words. Return only the condensed text in your response."
-language = "What language is this text in: {text}. Return only the language. Do not format your response."
-translate = ""
-rewrite = ""
+# slogan = "Generate a slogan for company called `{name} ({description})`. Return only the slogan in your response."
+# paragraph = "Generate a website paragraph for company called `{name} ({description})`. Return only the paragraph in your response."
+# language = "What language is this text in: {text}. Return only the language. Do not format your response."
+# translate = ""
+# rewrite = ""
 
 PROMPT_NAME_TO_TEMPALTE = {
-    "summarize": summarize,
+    "ask": ask,
     "extract": extract,
+    "summarize": summarize,
     "sentiment": sentiment,
     "code": code,
-    "slogan": slogan,
-    "paragraph": paragraph,
-    "condense": condense,
     "keywords": keywords,
-    "ask": ask,
     "humanize": humanize,
-    "language": language,
-    "translate": translate,
-    "rewrite": rewrite,
 }
 
 
@@ -54,4 +48,4 @@ def render_template(template_name: str, **kwargs) -> Optional[str]:
     template = _get(template_name)
     content = _render(template, **kwargs)
     if content:
-        return content
+        return f"{content} {REMOVE_FORMATTING}"
