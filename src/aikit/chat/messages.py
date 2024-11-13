@@ -21,6 +21,7 @@ def create_system_message(content: str) -> dict:
 
 def parse_json_content(message: dict) -> dict:
     content = message.get("content", "")
+    logger.debug(content)
     try:
         return json.loads(content)
     except json.JSONDecodeError as e:

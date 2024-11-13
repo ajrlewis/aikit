@@ -2,10 +2,11 @@ from typing import Optional
 
 from loguru import logger
 
-REMOVE_FORMATTING = "Your response will be sent directly to my client, so do not include comments directed toward me."
+REMOVE_COMMENTS = "**Your response will be sent directly to my client, so do not include comments directed toward me, e.g. `Here are the`, etc.**"
+JSON_FORMATTING = "**Ensure the response is valid JSON, e.g. '\{ \"key\": value \}'."
 
 ask = "{question}"
-extract = "Extract (or infer) these data points: `{data_points}` from the following text: `{text}`. If you're not able to extract a data point, return '' for it's value. Return only the extracted data points as a JSON object in your response."
+extract = "Analyze the following text: `{text}`. Extract only the following data points as valid JSON: `{data_points}`. If you're not able to extract a data point, return '' for its value."
 summarize = "Summarize the following text: `{text}`."
 sentiment = "Determine the sentiment from the following text: `{text}`. Return only 'positive', 'neutral' or 'negative'."
 code = "Generate code in the following language `{language}` to do the following: `{description}`. Return only the code in your response."
@@ -44,8 +45,12 @@ def _render(template: str, **kwargs) -> Optional[str]:
         return template.format(**kwargs)
 
 
-def render_template(template_name: str, **kwargs) -> Optional[str]:
+def render_template(
+    template_name: str, output_json: bool = False, **kwargs
+) -> Optional[str]:
     template = _get(template_name)
     content = _render(template, **kwargs)
     if content:
-        return f"{content} {REMOVE_FORMATTING}"
+        if output_json:
+            return f"{content} {REMOVE_COMMENTS} {JSON_FORMATTING}"
+        return f"{content} {REMOVE_COMMENTS}"

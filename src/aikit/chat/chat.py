@@ -1,3 +1,22 @@
+"""
+TODO (ajrl) call parameter change
+client
+client:
+  url
+  has_access
+  has_chat_completions_method
+model: str
+model: dict
+  name
+  system
+  temperature
+  max_tokens
+template: str
+template: dict
+  name
+  kwargs
+"""
+
 from loguru import logger
 from typing import Optional
 
@@ -9,7 +28,8 @@ def completion(
     client,
     model: str = None,
     context_messages: list[dict] = [],
-    max_tokens: int = 4096,
+    # max_tokens: int = 4096,
+    max_tokens: int = 6000,
     temperature: float = 0.2,
     top_p: float = 1,
     frequency_penalty: float = 0,
@@ -47,9 +67,9 @@ def completion(
 def call(
     client,
     template_name: str,
-    system_content: str = "Your a helpful AI assistant.",
+    system_content: str = "You're a helpful AI assistant.",
     **kwargs,
-):
+) -> dict:
     # Render user content template
 
     try:
@@ -76,7 +96,7 @@ def call(
         )
         logger.debug(f"{assistant_message = }")
     except Exception as e:
-        content = f" unable to get completion, error raised: {e}"
+        content = f"unable to get completion, error raised: {e}"
         logger.error(f"{content = }")
         assistant_message = messages.create_assistant_message(content)
 
