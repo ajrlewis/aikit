@@ -21,9 +21,9 @@ def create_system_message(content: str) -> dict:
 
 def parse_json_content(message: dict) -> dict:
     content = message.get("content", "")
-    logger.debug(content)
+    logger.debug(f"{content = }")
     try:
-        return json.loads(content)
+        message["content"] = json.loads(content)
     except json.JSONDecodeError as e:
-        logger.error(f"failed to parse JSON from content: {e = }")
-        return {}
+        logger.error(f"failed to parse message content to JSON: {e = }")
+    return message

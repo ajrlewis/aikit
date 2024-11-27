@@ -1,22 +1,3 @@
-"""
-TODO (ajrl) call parameter change
-client
-client:
-  url
-  has_access
-  has_chat_completions_method
-model: str
-model: dict
-  name
-  system
-  temperature
-  max_tokens
-template: str
-template: dict
-  name
-  kwargs
-"""
-
 from loguru import logger
 from typing import Optional
 
@@ -26,12 +7,11 @@ from . import prompt_templates
 
 def completion(
     client,
-    model: str = None,
     context_messages: list[dict] = [],
-    # max_tokens: int = 4096,
-    max_tokens: int = 6000,
+    model: str = None,
+    max_tokens: int = 4096,
     temperature: float = 0.2,
-    top_p: float = 1,
+    top_p: float = 1.0,
     frequency_penalty: float = 0,
     presence_penalty: float = 0,
 ) -> dict:
@@ -46,14 +26,16 @@ def completion(
         frequency_penalty: How much to penalize new tokens based on their existing frequency in the text so far. Decreases the model's likelihood to repeat the same line verbatim.
         presence_penalty: How much to penalize new tokens based on whether they appear in the text so far. Increases the model's likelihood to talk about new topics.
     """
-    logger.debug(f"{model = } {context_messages = }")
-    logger.debug(f"{temperature = } {max_tokens = }")
+    logger.debug(
+        f"{model = } {max_tokens = } {temperature = } {top_p = } {frequency_penalty = } {presence_penalty = }"
+    )
     output = client.chat.completions.create(
         messages=context_messages,
         model=model,
         temperature=temperature,
         max_tokens=max_tokens,
     )
+    # TODO (ajrl) Add exception handling.
     choices = output.choices
     choice = choices[0]
     message = choice.message
@@ -64,45 +46,68 @@ def completion(
     return message
 
 
+# TODO (ajrl) call parameter change
 def call(
     client,
-    template_name: str,
-    system_content: str = "You're a helpful AI assistant.",
+    model: dict,
+    template: dict,
     **kwargs,
 ) -> dict:
+    """
+    client: dict
+      url: str
+      has_access: bool
+      has_chat_completions_method: bool
+    model: dict
+      name: str
+      system: str
+      params: dict
+        temperature: float
+        max_tokens: float
+        ...
+    template: dict
+      name: str
+      parse_json: bool
+      kwargs: dict
+    """
     # Render user content template
-    logger.debug(f"{kwargs = }")
+    logger.debug(f"{client = } {model = } {template = }")
     try:
-        content = prompt_templates.render_template(template_name, **kwargs)
+        content = prompt_templates.render_template(template)
     except ValueError as error:
         content = f"unable to complete call, error raised: {error}"
         logger.error(f"{content = }")
         assistant_message = messages.create_assistant_message(content)
         logger.debug(f"{assistant_message = }")
         return assistant_message
-
     user_message = messages.create_user_message(content=content)
 
     # Create system context message
+    system_content = model.get("system")
+    if not system_content:
+        system_content = "You are a helpful AI assistant."
     system_message = messages.create_system_message(content=system_content)
 
-    context_messages = []
-    context_messages.append(system_message)
-    context_messages.append(user_message)
+    # Create the context messages.
+    context_messages = [system_message, user_message]
 
+    # Get the assistant response
     try:
         assistant_message = completion(
-            client, context_messages=context_messages, model=kwargs.get("model")
+            client,
+            context_messages=context_messages,
+            model=model.get("name"),
+            **model.get("kwargs"),
         )
         logger.debug(f"{assistant_message = }")
     except Exception as e:
         content = f"unable to get completion, error raised: {e}"
         logger.error(f"{content = }")
         assistant_message = messages.create_assistant_message(content)
-
     logger.debug(f"{assistant_message = }")
+
+    # Parse to JSON
+    if template.get("parse_json"):
+        assistant_message = messages.parse_json_content(assistant_message)
+
     return assistant_message
-
-
-if __name__ == "__main__":
-    main()
