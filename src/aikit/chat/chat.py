@@ -71,7 +71,7 @@ def call(
     **kwargs,
 ) -> dict:
     # Render user content template
-
+    logger.debug(f"{kwargs = }")
     try:
         content = prompt_templates.render_template(template_name, **kwargs)
     except ValueError as error:

@@ -46,6 +46,7 @@ def _render(template: str, **kwargs) -> Optional[str]:
 def render_template(
     template_name: str, parse_json: bool = False, **kwargs
 ) -> Optional[str]:
+    logger.debug(f"{template_name = } {parse_json = } {kwargs = }")
     template = _get(template_name)
     if content := _render(template, **kwargs):
         content = f"{content} {REMOVE_COMMENTS}"
