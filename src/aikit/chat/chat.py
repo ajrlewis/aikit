@@ -27,7 +27,9 @@ def completion(
         presence_penalty: How much to penalize new tokens based on whether they appear in the text so far. Increases the model's likelihood to talk about new topics.
     """
     logger.debug(
-        f"{model = } {max_tokens = } {temperature = } {top_p = } {frequency_penalty = } {presence_penalty = }"
+        f"{model = } {max_tokens = } {temperature = } {top_p = } {frequency_penalty = } {presence_penalty = }".encode(
+            "UTF-8"
+        )
     )
     output = client.chat.completions.create(
         messages=context_messages,
@@ -39,9 +41,9 @@ def completion(
     choices = output.choices
     choice = choices[0]
     message = choice.message
-    logger.debug(f"{message = }")
+    logger.debug(f"{message = }".encode("UTF-8"))
     content = message.content.strip()
-    logger.debug(f"{content = }")
+    logger.debug(f"{content = }".encode("UTF-8"))
     message = messages.create_assistant_message(content=content)
     return message
 
@@ -71,14 +73,14 @@ def call(
       kwargs: dict
     """
     # Render user content template
-    logger.debug(f"{client = } {model = } {template = }")
+    logger.debug(f"{client = } {model = } {template = }".encode("UTF-8"))
     try:
         content = prompt_templates.render_template(template)
     except ValueError as error:
         content = f"unable to complete call, error raised: {error}"
-        logger.error(f"{content = }")
+        logger.error(f"{content = }".encode("UTF-8"))
         assistant_message = messages.create_assistant_message(content)
-        logger.debug(f"{assistant_message = }")
+        logger.debug(f"{assistant_message = }".encode("UTF-8"))
         return assistant_message
     user_message = messages.create_user_message(content=content)
 
@@ -99,12 +101,12 @@ def call(
             model=model.get("name"),
             **model.get("kwargs"),
         )
-        logger.debug(f"{assistant_message = }")
+        logger.debug(f"{assistant_message = }".encode("UTF-8"))
     except Exception as e:
         content = f"unable to get completion, error raised: {e}"
-        logger.error(f"{content = }")
+        logger.error(f"{content = }".encode("UTF-8"))
         assistant_message = messages.create_assistant_message(content)
-    logger.debug(f"{assistant_message = }")
+    logger.debug(f"{assistant_message = }".encode("UTF-8"))
 
     # Parse to JSON
     if template.get("parse_json"):
