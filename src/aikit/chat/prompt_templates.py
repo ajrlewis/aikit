@@ -18,6 +18,16 @@ parse_json = "Convert and return this data into valid working JSON: `{data}`"
 language = "What is the primary language of his text: `{text}`."
 translate = "Translate this text from `{from_language}` to `{to_language}`: `{text}`"
 
+intent = "Identify the intent behind the following text: {text}"
+stopword_removal = (
+    "Remove common stopwords that do not add much value from the following text: {text}"
+)
+stemming = "Reduce each word to its base form in the following text: {text}"
+lemmatization = "Reduce each word to its base form that can be found in a dictionary in the following text: {text}"
+named_entity_recognition = (
+    "Identify and categorize the named entities in the following text: {text}"
+)
+
 PROMPT_NAME_TO_TEMPALTE = {
     "ask": ask,
     "extract": extract,
@@ -27,6 +37,10 @@ PROMPT_NAME_TO_TEMPALTE = {
     "keywords": keywords,
     "humanize": humanize,
     "parse_json": parse_json,
+    "intent": intent,
+    "stopword_removal": stopword_removal,
+    "stemming": stemming,
+    "named_entity_recognition": named_entity_recognition,
 }
 
 
