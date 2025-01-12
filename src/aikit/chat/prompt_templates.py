@@ -24,7 +24,7 @@ stopword_removal = (
 )
 stemming = "Reduce each word to its base form in the following text: {text}"
 lemmatization = "Reduce each word to its base form that can be found in a dictionary in the following text: {text}"
-named_entity_recognition = 'Identify and categorize the named entities (e.g. [{ "category": "", "text": "", "type": ""}, ...]) in the following text: {text}'
+named_entity_recognition = 'Identify and categorize the named entities (e.g. [{{"category": "", "text": "", "type": ""}}, ...]) in the following text: {text}'
 
 
 PROMPT_NAME_TO_TEMPALTE = {
