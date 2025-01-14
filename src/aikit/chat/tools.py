@@ -12,7 +12,7 @@ def intent(client, model: str, text: str, temperature: float = 0.3) -> str:
         "system": "You return the one-word intent of a given text only.",
         "kwargs": {"temperature": temperature},
     }
-    template_data = {"name": "intent", "kwargs": {"text": query}, "parse_json": True}
+    template_data = {"name": "intent", "kwargs": {"text": text}, "parse_json": True}
     assistant_message = chat.call(client, model=model_data, template=template_data)
     intent = assistant_message.get("content", "")
     logger.info(f"{intent = }")
