@@ -7,12 +7,16 @@ JSON_FORMAT = "**Return your response as valid JSON.**"
 
 ask = "{question}"
 
-# extract = "Analyze the following text: `{text}`. Extract only the following data points as valid JSON: `{data_points}`. If you're not able to extract a data point, return '' for its value."
 extract = """
-Analyze the provided text: {text} and extract the specified data points.
-Return the extracted data in valid JSON format, using {data_points} as the keys.
-If a data point cannot be extracted, include it in the output with an empty string ('') as its value.
+Analyze the following text: `{text}`.
+Extract only the following data points as valid JSON: `{data_points}`.
+If you're not able to extract a data point, return '' for its value."
 """
+# extract = """
+# Analyze the provided text: {text} and extract the specified data points.
+# Return the extracted data in valid JSON format, using {data_points} as the keys.
+# If a data point cannot be extracted, include it in the output with an empty string ('') as its value.
+# """
 
 summarize = """
 Provide a concise and accurate summary of the main points in the following text: {text}.
