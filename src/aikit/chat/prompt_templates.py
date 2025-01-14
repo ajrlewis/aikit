@@ -6,18 +6,34 @@ REMOVE_COMMENTS = "**Your response will be sent directly to my client, so do not
 JSON_FORMAT = "**Return your response as valid JSON.**"
 
 ask = "{question}"
-extract = "Analyze the following text: `{text}`. Extract only the following data points as valid JSON: `{data_points}`. If you're not able to extract a data point, return '' for its value."
-summarize = "Summarize the following text: `{text}`."
+
+# extract = "Analyze the following text: `{text}`. Extract only the following data points as valid JSON: `{data_points}`. If you're not able to extract a data point, return '' for its value."
+extract = """
+Analyze the provided text: {text} and extract the specified data points.
+Return the extracted data in valid JSON format, using {data_points} as the keys.
+If a data point cannot be extracted, include it in the output with an empty string ('') as its value.
+"""
+
+summarize = """
+Provide a concise and accurate summary of the main points in the following text: {text}.
+"""
+
 sentiment = "Determine the sentiment from the following text: `{text}`. Return only 'positive', 'neutral' or 'negative'."
+# sentiment_binary = "Classify text as either positive or negative: {text}."
+# sentiment_ternary = "Classify text as positive, negative, or neutral: {text}."
+# sentiment_score = "Assign a numerical score to the text, ranging from -1 (very negative) to 1 (very positive), with 0 being neutral: {text}"
+
 code = "Generate code in the following language `{language}` to do the following: `{description}`. Return only the code in your response."
-keywords = "Extract only the most relevant keywords and key phrases from this text: `{text}`. Return only the comma-separated extraction."
+
+keywords = """
+Identify and extract the most critical and relevant keywords and key phrases from the following text: {text}.
+"""
+
 humanize = "Humanize the following text: `{text}`. Incorporate human-like nuances, expressions, and a natural flow, delivering content that feels genuinely human-authored."
-explain = "Explain in depth what is meant by the following text: {text}"
+# explain = "Explain in depth what is meant by the following text: {text}"
 parse_json = "Convert and return this data into valid working JSON: `{data}`"
-
-language = "What is the primary language of his text: `{text}`."
-translate = "Translate this text from `{from_language}` to `{to_language}`: `{text}`"
-
+# language = "What is the primary language of his text: `{text}`."
+# translate = "Translate this text from `{from_language}` to `{to_language}`: `{text}`"
 intent = "Identify the intent behind the following text: {text}"
 stopword_removal = (
     "Remove common stopwords that do not add much value from the following text: {text}"
@@ -25,6 +41,7 @@ stopword_removal = (
 stemming = "Reduce each word to its base form in the following text: {text}"
 lemmatization = "Reduce each word to its base form that can be found in a dictionary in the following text: {text}"
 named_entity_recognition = 'Identify and categorize the named entities (e.g. [{{"category": "", "text": "", "type": ""}}, ...]) in the following text: {text}'
+similarity = "Consider this text: `{text}`. Compute and return the similarity ranging from 0 (no similarity) to 1 (very similar) to this text: `{other_text}`."
 
 
 PROMPT_NAME_TO_TEMPALTE = {
@@ -41,6 +58,7 @@ PROMPT_NAME_TO_TEMPALTE = {
     "stemming": stemming,
     "lemmatization": lemmatization,
     "named_entity_recognition": named_entity_recognition,
+    "similarity": similarity,
 }
 
 
