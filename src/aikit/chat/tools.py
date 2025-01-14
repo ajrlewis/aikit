@@ -2,6 +2,7 @@ import json
 
 from loguru import logger
 
+from . import chat
 from . import messages
 from . import prompt_templates
 
