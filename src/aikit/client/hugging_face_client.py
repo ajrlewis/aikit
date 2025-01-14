@@ -1,5 +1,6 @@
 import os
 import sys
+from typing import Optional
 
 from huggingface_hub import auth_check, InferenceClient
 from huggingface_hub.utils import GatedRepoError, RepositoryNotFoundError
@@ -24,14 +25,15 @@ def check_token_access(model: str, token: str):
         )
 
 
-def get_client(model: str) -> InferenceClient:
+def get_client(model: Optional[str] = None) -> InferenceClient:
     token = get_token()  # Get the token
-    check_token_access(model, token=token)  # Check the token can access the repo
+    if model:
+        check_token_access(model, token=token)  # Check the token can access the repo
     client = InferenceClient(model, token=token)  # Create and return the client
     return client
 
 
-def get_chat_models():
+def get_chat_models() -> list[str]:
     return [
         "meta-llama/Meta-Llama-3-8B-Instruct",
         # "meta-llama/Llama-3.1-70B-Instruct",  # requires pro subscription
@@ -39,5 +41,5 @@ def get_chat_models():
     ]
 
 
-def get_image_models():
+def get_image_models() -> list[str]:
     return ["black-forest-labs/FLUX.1-schnell", "stabilityai/stable-diffusion-2-1"]
