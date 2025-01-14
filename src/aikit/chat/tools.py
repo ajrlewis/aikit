@@ -7,6 +7,27 @@ from . import messages
 from . import prompt_templates
 
 
+def extract(
+    client, model: str, text: str, data_points: dict, temperature: float = 0.3
+) -> dict:
+    logger.debug(f"{text = } {data_points = }")
+    model = {
+        "name": model,
+        "system": "You extract JSON data points from text.",
+        "kwargs": {"temperature": temperature},
+    }
+    template = {
+        "name": "extract",
+        "kwargs": {"text": text, "data_points": data_points},
+        "parse_json": True,
+    }
+    assistant_message = chat.call(client, model=model, template=template)
+    logger.debug(assistant_message)
+    data = assistant_message.get("content", {})
+    logger.debug(f"{data = }")
+    return data
+
+
 def keywords(client, model: str, text: str, temperature: float = 0.3) -> str:
     model_data = {
         "name": model,
