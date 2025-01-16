@@ -3,7 +3,7 @@ from typing import Optional
 from loguru import logger
 
 REMOVE_COMMENTS = "**Your response will be sent directly to my client, so do not include comments directed toward me, e.g. `Here are the ...`, etc.**"
-JSON_FORMAT = "**Return your response as valid JSON.**"
+JSON_FORMAT = "**Return your response as valid JSON (double quotes, opening and closing curly braces, etc.).**"
 
 ask = "{question}"
 
