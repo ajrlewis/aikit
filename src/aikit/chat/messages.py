@@ -23,7 +23,8 @@ def parse_json_content(message: dict) -> dict:
     content = message.get("content", "")
     logger.debug(f"{content = }".encode("UTF-8"))
     try:
-        message["content"] = json.loads(content)
+        # message["content"] = json.loads(content)
+        message["content"] = json.loads(content.replace("`", ""))
     except json.JSONDecodeError as e:
         logger.error(f"failed to parse message content to JSON: {e = }".encode("UTF-8"))
     return message
