@@ -90,5 +90,6 @@ def render_template(template: dict) -> Optional[str]:
     if content := _render(prompt_template, **template_kwargs):
         content = f"{content} {REMOVE_COMMENTS}"
         if template_parse_json:
-            content = f"{content} {JSON_FORMAT}"
+            # content = f"{content} {JSON_FORMAT}"
+            contet = f"Provide the answer to this question in valid JSON format, with double quotes and opening and closing curly braces. Your response should be a single JSON object. {content}"
         return content
