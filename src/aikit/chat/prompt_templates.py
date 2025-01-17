@@ -91,5 +91,5 @@ def render_template(template: dict) -> Optional[str]:
         content = f"{content} {REMOVE_COMMENTS}"
         if template_parse_json:
             # content = f"{content} {JSON_FORMAT}"
-            contet = f"Provide the answer to this question in valid JSON format, with double quotes and opening and closing curly braces. Your response should be a single JSON object. {content}"
+            content = f"Provide the answer to this question in valid JSON format, with double quotes and opening and closing curly braces. Your response should be a single JSON object. {content}"
         return content
