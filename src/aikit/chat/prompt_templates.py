@@ -3,7 +3,8 @@ from typing import Optional
 from loguru import logger
 
 REMOVE_COMMENTS = "**Your response will be sent directly to my client, so do not include comments directed toward me, e.g. `Here are the ...`, etc.**"
-JSON_FORMAT = "**Return your response as valid JSON (double quotes, opening and closing curly braces, etc.).**"
+# JSON_FORMAT = "**Return your response as valid JSON (double quotes, opening and closing curly braces, etc.).**"
+JSON_FORMAT = "Provide the answer to this question in valid JSON format, with double quotes and opening and closing curly braces. Your response should be a single JSON object."
 
 ask = "{question}"
 
@@ -90,6 +91,5 @@ def render_template(template: dict) -> Optional[str]:
     if content := _render(prompt_template, **template_kwargs):
         content = f"{content} {REMOVE_COMMENTS}"
         if template_parse_json:
-            # content = f"{content} {JSON_FORMAT}"
-            content = f"Provide the answer to this question in valid JSON format, with double quotes and opening and closing curly braces. Your response should be a single JSON object. {content}"
+            content = f"{JSON_FORMAT} {content}"
         return content
