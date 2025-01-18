@@ -7,6 +7,25 @@ from . import messages
 from . import prompt_templates
 
 
+def ask(client, model: str, question: str, temperature: float = 0.3) -> dict:
+    logger.debug(f"{question = }")
+    model_data = {
+        "name": model,
+        "system": "You are a helpful AI assistant.",
+        "kwargs": {"temperature": temperature},
+    }
+    template_data = {
+        "name": "ask",
+        "kwargs": {"question": question},
+        "parse_json": True,
+    }
+    assistant_message = chat.call(client, model=model_data, template=template_data)
+    logger.debug(assistant_message)
+    data = assistant_message.get("content", {})
+    logger.debug(f"{data = }")
+    return data
+
+
 def extract(
     client, model: str, text: str, data_points: dict, temperature: float = 0.3
 ) -> dict:
