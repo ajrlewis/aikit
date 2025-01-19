@@ -17,7 +17,7 @@ def ask(client, model: str, question: str, temperature: float = 0.3) -> dict:
     template_data = {
         "name": "ask",
         "kwargs": {"question": question},
-        "parse_json": True,
+        # "parse_json": True,
     }
     assistant_message = chat.call(client, model=model_data, template=template_data)
     logger.debug(assistant_message)
