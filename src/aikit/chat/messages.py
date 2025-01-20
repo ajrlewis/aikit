@@ -1,4 +1,5 @@
 import json
+import re
 
 from loguru import logger
 
@@ -24,6 +25,7 @@ def parse_json_content(message: dict) -> dict:
     logger.debug(f"{content = }".encode("UTF-8"))
     try:
         content = content.replace("`", "")
+        content = re.sub(r'\\(?![nrtbf"\'\\])', r"\\\\", content)
         message["content"] = json.loads(content)
     except json.JSONDecodeError as e:
         logger.error(f"failed to parse message content to JSON: {e = }".encode("UTF-8"))
