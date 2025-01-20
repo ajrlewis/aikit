@@ -7,7 +7,13 @@ from . import messages
 from . import prompt_templates
 
 
-def ask(client, model: str, question: str, temperature: float = 0.3) -> dict:
+def ask(
+    client,
+    model: str,
+    question: str,
+    temperature: float = 0.3,
+    parse_json: bool = False,
+) -> dict:
     logger.debug(f"{question = }")
     model_data = {
         "name": model,
@@ -17,7 +23,7 @@ def ask(client, model: str, question: str, temperature: float = 0.3) -> dict:
     template_data = {
         "name": "ask",
         "kwargs": {"question": question},
-        # "parse_json": True,
+        "parse_json": parse_json,
     }
     assistant_message = chat.call(client, model=model_data, template=template_data)
     logger.debug(assistant_message)
