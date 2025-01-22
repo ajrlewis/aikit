@@ -77,3 +77,20 @@ def intent(client, model: str, text: str, temperature: float = 0.3) -> str:
     intent = assistant_message.get("content", "")
     logger.info(f"{intent = }")
     return intent
+
+
+def named_entity_recognition(
+    client, model: str, text: str, temperature: float = 0.3
+) -> str:
+    model_data = {
+        "name": model,
+        "system": "You compute named entity recognition of text.",
+        "kwargs": {"temperature": temperature},
+    }
+    template_data = {"name": "named_entity_recognition", "kwargs": {"text": text}}
+    assistant_message = chat.call(
+        client, model=model_data, template=template_data, parse_json=True
+    )
+    named_entities = assistant_message.get("content", "")
+    logger.debug(f"{named_entities = }")
+    return named_entities
