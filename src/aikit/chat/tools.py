@@ -87,10 +87,12 @@ def named_entity_recognition(
         "system": "You compute named entity recognition of text.",
         "kwargs": {"temperature": temperature},
     }
-    template_data = {"name": "named_entity_recognition", "kwargs": {"text": text}}
-    assistant_message = chat.call(
-        client, model=model_data, template=template_data, parse_json=True
-    )
+    template_data = {
+        "name": "named_entity_recognition",
+        "kwargs": {"text": text},
+        "parse_json": True,
+    }
+    assistant_message = chat.call(client, model=model_data, template=template_data)
     named_entities = assistant_message.get("content", "")
     logger.debug(f"{named_entities = }")
     return named_entities
