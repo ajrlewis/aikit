@@ -45,7 +45,24 @@ stopword_removal = (
 )
 stemming = "Reduce each word to its base form in the following text: {text}"
 lemmatization = "Reduce each word to its base form that can be found in a dictionary in the following text: {text}"
-named_entity_recognition = 'Identify and categorize the named entities (e.g. [{{"category": "", "text": "", "type": ""}}, ...]) in the following text: {text}'
+
+named_entity_recognition = """
+Identify and categorize the named entities, e.g.
+
+    [
+        {{
+            "category": "The category or class of the named entity, such as 'Person', 'Location', 'Organization', etc.",
+            "text": "The actual text that represents the named entity, such as a person's name, a city name, a company name, etc.",
+            "type": "The specific type of named entity, which can be more detailed than the category. For example, under the category 'Location', the type could be 'City', 'Country', 'State', etc.",
+            "confidence": "The confidence score from 0 to 1 in the certainty of the entity."
+        }}, 
+        ...
+    ]
+
+in the following text:
+
+{text}
+"""
 similarity = "Consider this text: `{text}`. Compute and return the similarity ranging from 0 (no similarity) to 1 (very similar) to this text: `{other_text}`."
 
 
