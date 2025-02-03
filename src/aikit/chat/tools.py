@@ -66,6 +66,19 @@ def keywords(client, model: str, text: str, temperature: float = 0.3) -> str:
     return keywords
 
 
+def summarize(client, model: str, text: str, temperature: float = 0.1) -> str:
+    model_data = {
+        "name": model,
+        "system": "You return a comprehensive summary of a given text only.",
+        "kwargs": {"temperature": temperature},
+    }
+    template_data = {"name": "summarize", "kwargs": {"text": text}}
+    assistant_message = chat.call(client, model=model_data, template=template_data)
+    summary = assistant_message.get("content", "")
+    logger.info(f"{summary = }")
+    return summary
+
+
 def intent(client, model: str, text: str, temperature: float = 0.3) -> str:
     model_data = {
         "name": model,
