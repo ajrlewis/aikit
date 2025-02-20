@@ -15,10 +15,10 @@ authors = [
     { name = "ajrlewis", email = "hello@ajrlewis.com" }
 ]
 dependencies = [
-    "loguru==0.7.2",
-    "huggingface-hub==0.25.2",
-    "openai==1.35.13",
-    "Pillow==11.0.0",
+    "loguru>=0.7.2",
+    "huggingface-hu>=0.25.2",
+    "openai>=1.35.13",
+    "Pillow>=11.0.0",
 ]
 
 [tool.setuptools.packages.find]
